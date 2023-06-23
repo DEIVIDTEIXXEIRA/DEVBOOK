@@ -1,4 +1,5 @@
 $('#nova-publicacao').on('submit', criarPublicacao);
+$('.curtir-publicacao').on('click', curtirPublicacao);
 
 function criarPublicacao(evento) {
     evento.preventDefault();
@@ -16,3 +17,20 @@ function criarPublicacao(evento) {
         alert("Erro ao criar publicação!!");
     });
 }
+
+function curtirPublicacao(evento) {
+    console.log("curtindo published");
+
+    const elementoClicado = $(evento.target);
+    const publicacaoId = elementoClicado.closest('div').data('publicacao-id');
+
+    $.ajax({
+        url:  `/publicacoes/${publicacaoId}/curtir`,
+        method: "POST",
+    }).done(function() {
+        alert("Publicação curtida")
+    }).fail(function() {
+        alert("Erro ao curtir a published..")
+    })
+}
+
