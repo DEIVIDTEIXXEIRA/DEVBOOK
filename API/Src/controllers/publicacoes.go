@@ -239,7 +239,7 @@ func BuscarPublicacoesPorUsuario(w http.ResponseWriter, r *http.Request) {
 	respostas.JSON(w, http.StatusOK, publicacoes)
 }
 
-//CurtirPublicacao adiciona uma curtida na publicação
+// CurtirPublicacao adiciona uma curtida na publicação
 func CurtirPublicacao(w http.ResponseWriter, r *http.Request) {
 	parametros := mux.Vars(r)
 	publicacaoID, erro := strconv.ParseUint(parametros["publicacaoId"], 10, 64)
@@ -262,10 +262,9 @@ func CurtirPublicacao(w http.ResponseWriter, r *http.Request) {
 	}
 
 	respostas.JSON(w, http.StatusNoContent, nil)
-
 }
 
-//DescurtirPublicacao deleta uma curtida da publicação
+// DescurtirPublicacao deleta uma curtida da publicação
 func DescurtirPublicacao(w http.ResponseWriter, r *http.Request) {
 	parametros := mux.Vars(r)
 	publicacaoID, erro := strconv.ParseUint(parametros["publicacaoId"], 10, 64)
@@ -288,6 +287,5 @@ func DescurtirPublicacao(w http.ResponseWriter, r *http.Request) {
 	}
 
 	respostas.JSON(w, http.StatusNoContent, nil)
-
 
 }

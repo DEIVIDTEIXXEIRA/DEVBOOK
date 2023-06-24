@@ -44,7 +44,7 @@ func CriarPublicacao(w http.ResponseWriter, r *http.Request) {
 
 }
 
-// CurtirPublicacao chama a API para curtir uma publicação 
+// CurtirPublicacao chama a API para curtir uma publicação
 func CurtirPublicacao(w http.ResponseWriter, r *http.Request) {
 	parametros := mux.Vars(r)
 	publicacaoId, erro := strconv.ParseUint(parametros["publicacaoId"], 10, 64)
@@ -52,6 +52,7 @@ func CurtirPublicacao(w http.ResponseWriter, r *http.Request) {
 		respostas.JSON(w, http.StatusBadRequest, respostas.ErroAPI{Erro: erro.Error()})
 		return
 	}
+
 
 	url := fmt.Sprintf("%s/publicacoes/%d/curtir", config.APIURL, publicacaoId)
 	response, erro := requisicoes.FazerRequisicaoComAutenticacao(r, http.MethodPost, url, nil)
@@ -65,6 +66,5 @@ func CurtirPublicacao(w http.ResponseWriter, r *http.Request) {
 		respostas.TratarStatusCodeDeErro(w, response)
 		return
 	}
-
 	respostas.JSON(w, response.StatusCode, nil)
 }

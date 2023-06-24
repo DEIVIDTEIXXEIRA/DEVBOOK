@@ -19,7 +19,7 @@ function criarPublicacao(evento) {
 }
 
 function curtirPublicacao(evento) {
-    console.log("curtindo published");
+    evento.preventDefault();
 
     const elementoClicado = $(evento.target);
     const publicacaoId = elementoClicado.closest('div').data('publicacao-id');
@@ -28,9 +28,14 @@ function curtirPublicacao(evento) {
         url:  `/publicacoes/${publicacaoId}/curtir`,
         method: "POST",
     }).done(function() {
-        alert("Publicação curtida")
+        const contadorDeCutidas = elementoClicado.next('span');
+        const quantidadeDeCutidas = parseInt(contadorDeCutidas.text());
+        
+        contadorDeCutidas.text(quantidadeDeCutidas + 1);
+        
     }).fail(function() {
-        alert("Erro ao curtir a published..")
+        alert("Erro ao curtir a published..");
     })
+
 }
 
