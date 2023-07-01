@@ -24,6 +24,7 @@ function curtirPublicacao(evento) {
     const elementoClicado = $(evento.target);
     const publicacaoId = elementoClicado.closest('div').data('publicacao-id');
 
+    elementoClicado.prop('disable', true);
     $.ajax({
         url:  `/publicacoes/${publicacaoId}/curtir`,
         method: "POST",
@@ -35,6 +36,8 @@ function curtirPublicacao(evento) {
         
     }).fail(function() {
         alert("Erro ao curtir a published..");
+    }).always(function() {
+        elementoClicado.prop('disable', false);
     })
 
 }

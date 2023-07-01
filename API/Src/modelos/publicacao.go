@@ -13,11 +13,11 @@ type Publicacao struct {
 	Conteudo  string    `json:"conteudo,omitempty"`
 	AutorID   uint64    `json:"autorId,omitempty"`
 	AutorNick string    `json:"autorNick,omitempty"`
-	Curtidas  uint64    `json:"cutidas"`
+	Curtidas  uint64    `json:"curtidas"`
 	CriadaEm  time.Time `json:"criadaEm,omitempty"`
 }
 
-//preparar vai chamar os métodos para validar e formatar a publicação recebida
+// preparar vai chamar os métodos para validar e formatar a publicação recebida
 func (publicacao *Publicacao) Preparar() error {
 	if erro := publicacao.validar(); erro != nil {
 		return erro
@@ -41,4 +41,3 @@ func (publicacao *Publicacao) formatar() {
 	publicacao.Titulo = strings.TrimSpace(publicacao.Titulo)
 	publicacao.Conteudo = strings.TrimSpace(publicacao.Conteudo)
 }
-
