@@ -16,7 +16,7 @@ function criarPublicacao(evento) {
             conteudo: $('#conteudo').val(),
         }
     }).done(function() {
-        window.location = "/home"
+        window.location = "/home";
     }).fail(function() {
         Swal.fire("Ops...", "Erro ao criar publicação!!!", "error");
     });
@@ -43,7 +43,7 @@ function curtirPublicacao(evento) {
         elementoClicado.removeClass('curtir-publicacao');
 
     }).fail(function() {
-        Swal.fire("Ops...", "Erro ao curtir a published..", "error");
+        Swal.fire("Ops...", "Erro ao curtir a publicação..", "error");
     }).always(function() {
         elementoClicado.prop('disabled', false);
     });

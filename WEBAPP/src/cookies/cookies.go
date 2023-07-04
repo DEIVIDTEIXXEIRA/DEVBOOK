@@ -2,6 +2,7 @@ package cookies
 
 import (
 	"net/http"
+	"time"
 	"webapp/src/config"
 
 	"github.com/gorilla/securecookie"
@@ -9,15 +10,15 @@ import (
 
 var s *securecookie.SecureCookie
 
-//configurar utiliza as variaveis de ambiente para a criação do SecureCookies
+// configurar utiliza as variaveis de ambiente para a criação do SecureCookies
 func Configurar() {
 	s = securecookie.New(config.HashKey, config.BlockKey)
 }
 
-//Salvar registra as informações de autenticação 
+// Salvar registra as informações de autenticação
 func Salvar(w http.ResponseWriter, ID, token string) error {
 	dados := map[string]string{
-		"id": ID, 
+		"id":    ID,
 		"token": token,
 	}
 
@@ -27,26 +28,37 @@ func Salvar(w http.ResponseWriter, ID, token string) error {
 	}
 
 	http.SetCookie(w, &http.Cookie{
-		Name: "dados", 
-		Value: dadosCodificados,
-		Path: "/",
+		Name:     "dados",
+		Value:    dadosCodificados,
+		Path:     "/",
 		HttpOnly: true,
 	})
 
-	return nil 
+	return nil
 }
 
 // Ler retorna os valores armazenados no cokie *
 func Ler(r *http.Request) (map[string]string, error) {
 	cookie, erro := r.Cookie("dados")
 	if erro != nil {
-		return nil, erro 
+		return nil, erro
 	}
 
 	valores := make(map[string]string)
 	if erro = s.Decode("dados", cookie.Value, &valores); erro != nil {
-		return nil, erro 
+		return nil, erro
 	}
 
-	return valores, nil 
+	return valores, nil
+}
+
+// Deletar remove os valores armazenados no cookie
+func Deletar(w http.ResponseWriter) {
+	http.SetCookie(w, &http.Cookie{
+		Name:     "dados",
+		Value:    "",
+		Path:     "/",
+		HttpOnly: true,
+		Expires:  time.Unix(0, 0),
+	})
 }
