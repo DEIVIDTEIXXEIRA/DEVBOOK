@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
 {{ define "curtidas" }}
-<i class="fas fa-heart curtir-publicacao"></i>
+<i class="fas fa-heart curtir-publicacao" style="cursor: pointer;"></i>
 <span> {{ .Curtidas }} </span>
 {{ end }}
 
@@ -12,8 +12,7 @@
 {{ end }}
 
 {{ define "deletar" }}
-<a href="/deletar" style="text-decoration: none;">
-   <i class="fa-solid fa-trash text-danger"> </i>
+   <i class="fa-solid fa-trash text-danger deletar-publicacao" style="cursor: pointer;"></i>
 </a>
 {{ end }}
 
