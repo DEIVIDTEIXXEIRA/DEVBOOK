@@ -19,8 +19,8 @@
 {{ define "cabecalho-publicacao" }}
   <h1 class="display-4"> {{ .Titulo }} </h1>
   <p class="lead"> {{ .Conteudo }} </p>
-  <a href="#"> {{ .AutorNick }} - {{ .CriadoEm.Format "01/02/2006 3:4"}} </a>
-  <hr class="my-4">
+  <a href="#"> {{ .AutorNick }} - {{ .CriadoEm.Format "02/01/2006" }} </a>
+  <hr class="my-4">                             
   {{ end }}
 
   {{ define "publicacao-com-permissao" }}
