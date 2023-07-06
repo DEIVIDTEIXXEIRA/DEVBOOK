@@ -97,7 +97,7 @@ func CarregarPaginaDeEdicaoDePublicacao(w http.ResponseWriter, r *http.Request) 
 	utils.ExecutarTemplate(w, "atualizar-publicacao.html", publicacao)
 }
 
-//CarregarPaginaDeUsuario carrega a pagina com os usuairo que atendem o filtro
+// CarregarPaginaDeUsuario carrega a pagina com os usuairo que atendem o filtro
 func CarregarPaginaDeUsuario(w http.ResponseWriter, r *http.Request) {
 	nomeOuNick := strings.ToLower(r.URL.Query().Get("usuario"))
 	url := fmt.Sprintf("%s/usuarios?usuario=%s", config.APIURL, nomeOuNick)
@@ -123,7 +123,7 @@ func CarregarPaginaDeUsuario(w http.ResponseWriter, r *http.Request) {
 	utils.ExecutarTemplate(w, "usuarios.html", usuarios)
 }
 
-//CarregarPerfilDoUsuario carrega a pagina de perfil do usuairo.
+// CarregarPerfilDoUsuario carrega a pagina de perfil do usuairo.
 func CarregarPerfilDoUsuario(w http.ResponseWriter, r *http.Request) {
 	parametros := mux.Vars(r)
 	usuarioID, erro := strconv.ParseUint(parametros["usuarioId"], 10, 64)
@@ -133,5 +133,20 @@ func CarregarPerfilDoUsuario(w http.ResponseWriter, r *http.Request) {
 	}
 
 	usuario, erro := modelos.BuscarUsuarioCompleto(usuarioID, r)
-	fmt.Println(usuario, erro)
+	if erro != nil {
+		respostas.JSON(w, http.StatusInternalServerError, respostas.ErroAPI{Erro: erro.Error()})
+		return
+	}
+
+	cookie, _ := cookies.Ler(r)
+	usuarioLogadoID, _ := strconv.ParseUint(cookie["id"], 10, 64)
+
+	utils.ExecutarTemplate(w, "usuario.html", struct {
+		Usuario         modelos.Usuario
+		UsuarioLogadoID uint64
+	}{
+		Usuario:         usuario,
+		UsuarioLogadoID: usuarioLogadoID,
+	})
+
 }
