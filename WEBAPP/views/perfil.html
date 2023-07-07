@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevBook - Meu perfil </title>
+    <link href="/assets/css/bootstrap.css" rel="stylesheet"/>
+    <link href="/assets/css/custom.css" rel="stylesheet" />
+</head>
+<body>
+    {{ template "cabecalho" }}
+
+    <div class="container-fluid">
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            Meu Perfil
+                        </h5>
+                        <h6 class="card-subtitle mb-2 text-muted">
+                            {{ .Nome }} - {{ .Nick }} - Membro Desde:
+                            {{ .CriadoEm.Format "02/01/2006"}}
+                        </h6>
+
+                        <p class="card-text">
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#modal-seguidores">
+                                Seguidores: {{ len .Seguidores }}
+                            </a>
+                        </p>
+
+                        <p class="card-text">
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#modal-seguindo">
+                                Seguindo: {{ len .Seguindo }}
+                            </a>
+                        </p>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <a href="/editar/usuario" class="card-link">
+                                    <button class="btn btn-info">Editar Usuário</button>
+                                </a>
+
+                                <a href="/atualizar-senha" class="card-link">
+                                    <button class="btn btn-info">Atualizar Senha</button>
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card title">Minhas Publicações</h5>
+                    <p class="card-text"> 
+                        {{ range .Publicacoes }} 
+                            {{ template "publicacao-com-permissao" . }}
+                        {{ else }}
+                            <p class="text-muted text-center">
+                                Nem uma Publicação por aqui :/
+                            </p>
+                        {{ end }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{ template "rodape" }}
+    {{ template "scripts" }}
+    {{ template "modal-seguidores" . }}
+    {{ template "modal-seguindo" . }}
+
+    <script src="/assets/js/publicacoes.js"></script>
+</body>
+</html>
