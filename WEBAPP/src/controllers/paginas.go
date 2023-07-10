@@ -97,7 +97,7 @@ func CarregarPaginaDeEdicaoDePublicacao(w http.ResponseWriter, r *http.Request) 
 	utils.ExecutarTemplate(w, "atualizar-publicacao.html", publicacao)
 }
 
-// CarregarPaginaDeUsuario carrega a pagina com os usuairo que atendem o filtro
+// CarregarPaginaDeUsuario carrega a pagina com os usuarios que atendem o filtro
 func CarregarPaginaDeUsuario(w http.ResponseWriter, r *http.Request) {
 	nomeOuNick := strings.ToLower(r.URL.Query().Get("usuario"))
 	url := fmt.Sprintf("%s/usuarios?usuario=%s", config.APIURL, nomeOuNick)
