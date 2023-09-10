@@ -73,11 +73,19 @@ func (repositorio Publicacoes) BuscarPorID(publicacaoID uint64) (modelos.Publica
 // Buscar traz as publicações dos usuários seguidos e também do próprio usuário que fez a requisição!
 func (repositorio Publicacoes) Buscar(usuarioID uint64) ([]modelos.Publicacao, error) {
 	linhas, erro := repositorio.db.Query(`
-	select distinct p.*, nick from publicacoes p
-	inner join usuarios u on u.id = p.autor_id
-	inner join seguidores s on p.autor_id = s.usuario_id
-	where u.id = ? or s.seguidor_id = ?
-	order by 1 desc`,
+	SELECT p.*, u.nick
+	FROM publicacoes p
+	INNER JOIN usuarios u ON u.id = p.autor_id
+	WHERE u.id = ? 
+
+	UNION
+
+	SELECT p.*, u.nick
+	FROM publicacoes p
+	INNER JOIN usuarios u ON u.id = p.autor_id
+	INNER JOIN seguidores s ON p.autor_id = s.usuario_id
+	WHERE s.seguidor_id = ?
+	ORDER BY criadaEm DESC;`,
 		usuarioID, usuarioID,
 	)
 	if erro != nil {
@@ -101,10 +109,10 @@ func (repositorio Publicacoes) Buscar(usuarioID uint64) ([]modelos.Publicacao, e
 		); erro != nil {
 			return nil, erro
 		}
+
 		publicacoes = append(publicacoes, publicacao)
 	}
 	return publicacoes, nil
-
 }
 
 // Atualizar altera os dados de uma publicação do banco de dados

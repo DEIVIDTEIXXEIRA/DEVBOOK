@@ -55,6 +55,7 @@ func CarregarPaginaPrincipal(w http.ResponseWriter, r *http.Request) {
 
 	cookie, _ := cookies.Ler(r)
 	usuarioID, _ := strconv.ParseUint(cookie["id"], 10, 64)
+	fmt.Println(usuarioID)
 
 	utils.ExecutarTemplate(w, "home.html", struct {
 		Publicacoes []modelos.Publicacao
@@ -133,7 +134,7 @@ func CarregarPerfilDoUsuario(w http.ResponseWriter, r *http.Request) {
 	}
 
 	cookie, _ := cookies.Ler(r)
-	usuarioLogadoID, _ := strconv.ParseUint(cookie["id"], 10, 64) 
+	usuarioLogadoID, _ := strconv.ParseUint(cookie["id"], 10, 64)
 
 	if usuarioID == usuarioLogadoID {
 		http.Redirect(w, r, "/perfil", 302)
@@ -145,8 +146,6 @@ func CarregarPerfilDoUsuario(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	
-
 	utils.ExecutarTemplate(w, "usuario.html", struct {
 		Usuario         modelos.Usuario
 		UsuarioLogadoID uint64
@@ -157,7 +156,7 @@ func CarregarPerfilDoUsuario(w http.ResponseWriter, r *http.Request) {
 
 }
 
-//CarregarPerfilDoUsuarioLogado carrega a página de perfil do usuario que esta logad
+// CarregarPerfilDoUsuarioLogado carrega a página de perfil do usuario que esta logad
 func CarregarPerfilDoUsuarioLogado(w http.ResponseWriter, r *http.Request) {
 	cookie, _ := cookies.Ler(r)
 	usuarioID, _ := strconv.ParseUint(cookie["id"], 10, 64)
@@ -186,9 +185,9 @@ func CarregarPaginaDeEdicaoDeUsuario(w http.ResponseWriter, r *http.Request) {
 	}
 
 	utils.ExecutarTemplate(w, "editar-usuario.html", usuario)
-}	
+}
 
-//CarregarPaginaDeAtualizacaoDeSenha carrega a pagina de formulário para atualização de senha
+// CarregarPaginaDeAtualizacaoDeSenha carrega a pagina de formulário para atualização de senha
 func CarregarPaginaDeAtualizacaoDeSenha(w http.ResponseWriter, r *http.Request) {
 	utils.ExecutarTemplate(w, "atualizar-senha.html", nil)
 }
